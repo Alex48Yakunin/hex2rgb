@@ -17,9 +17,31 @@ function ColorConverter(){
     return `rgb(${r}, ${g}, ${b})`;
   }
 
+
+const validateHex = (value) => {
+  if(value.length === 7 && isNaN(value) !== false){
+    if(value[0] === '#') {
+      setForm({
+        input: value.trim(),
+        rgb: getRGB(value),
+        fon: null
+      });
+    } else {
+      setForm({
+        rgb: "Ошибка!",
+        fon: 'red'
+      });
+    }
+  } else {
+    setForm({
+      rgb: "Ошибка!",
+      fon: 'red'
+    });
+  }
+}
+
  const update = (e) => {
-    const hexValue = e.target.value,
-          rgbValue = getRGB(e.target.value);
+    const hexValue = e.target.value;
 
     setForm({
       input: hexValue.trim(),
@@ -27,31 +49,7 @@ function ColorConverter(){
       fon: null
     });
 
-    if (hexValue.length === 7) {
-
-      if (hexValue.indexOf('#') !== -1 && rgbValue !== '') {
-        setForm({
-          input: hexValue,
-          rgb: rgbValue,
-          fon: null
-        });
-      } else {
-        setForm({
-          input: hexValue.trim(),
-          rgb: "Ошибка!",
-          fon: 'red'
-        });
-      }
-
-    } else if (hexValue.length > 7) {
-
-      setForm({
-        input: hexValue.trim(),
-        rgb: "Ошибка!",
-        fon: 'red'
-      });
-      
-    }
+    validateHex(hexValue);
   };
 
 
